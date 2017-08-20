@@ -157,6 +157,7 @@
     <ClInclude Include="src\math\Vector3.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="README.md" />
     <None Include="src\Shaders\basique2D.frag" />
     <None Include="src\Shaders\basique2D.vert" />
     <None Include="src\Shaders\couleur2D.frag" />
@@ -165,6 +166,11 @@
     <None Include="src\Shaders\couleur3D.vert" />
     <None Include="src\Shaders\texture.frag" />
     <None Include="src\Shaders\texture.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\crate13.jpg" />
+    <Image Include="resources\test.png" />
+    <Image Include="resources\veg005.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

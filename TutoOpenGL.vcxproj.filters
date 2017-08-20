@@ -93,5 +93,17 @@
     <None Include="src\Shaders\couleur3D.vert" />
     <None Include="src\Shaders\texture.frag" />
     <None Include="src\Shaders\texture.vert" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\crate13.jpg">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="resources\test.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="resources\veg005.jpg">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
   </ItemGroup>
 </Project>
