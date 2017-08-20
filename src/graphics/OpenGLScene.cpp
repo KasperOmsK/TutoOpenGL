@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "../Shader.h"
+#include "Shader.h"
 
 
 OpenGLScene::OpenGLScene(std::string _title, int _width, int _height)
@@ -36,7 +36,6 @@ bool OpenGLScene::initWindow()
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, APP_OPENGL_MINOR_VERSION);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, APP_OPENGL_DOUBLEBUFFER);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, APP_OPENGL_DEPTH_SIZE);
-
 	//========================window creation=====================
 	m_window = SDL_CreateWindow(m_title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 		m_width, m_height, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
@@ -56,8 +55,6 @@ bool OpenGLScene::initWindow()
 		return false;
 	}
 
-	
-
 	std::cout << "OpenGL : " << glGetString(GL_VERSION) << std::endl;
 	return true;
 }
@@ -73,11 +70,11 @@ bool OpenGLScene::initGL()
 
 	//enable depth buffer test
 	glEnable(GL_DEPTH_TEST);
-	
+
 	return true;
 }
 
-void OpenGLScene::events()
+void OpenGLScene::updateEvents()
 {
 	m_inputs.Update();
 	m_closed = m_inputs.closed();

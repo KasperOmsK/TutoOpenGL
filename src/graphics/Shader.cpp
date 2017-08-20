@@ -246,7 +246,7 @@ bool Shader::compilerShader(GLuint &shader, GLenum type, std::string const &fich
 
 
         // Affichage de l'erreur
-
+		std::cout << "could not compile shader : (" << fichierSource << ")" << std::endl;
         std::cout << erreur << std::endl;
 
 

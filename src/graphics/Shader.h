@@ -1,12 +1,8 @@
 #pragma once
 
-// Include Windows
 #include <GL/glew.h>
-// Includes communs
-
 #include <string>
 #include <fstream>
-
 
 // Classe Shader
 

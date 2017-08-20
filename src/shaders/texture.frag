@@ -10,7 +10,7 @@ in vec2 coordTexture;
 
 // Uniform
 
-uniform sampler2D texture;
+uniform sampler2D tex;
 
 
 // Sortie 
@@ -24,5 +24,5 @@ void main()
 {
     // Couleur du pixel
 
-    out_Color = texture(texture, coordTexture);
+    out_Color = texture(tex, coordTexture);
 }

@@ -21,7 +21,7 @@ class OpenGLScene
 	public:
 		bool initWindow();
 		bool initGL();
-		void events();
+		void updateEvents();
 		void swapBuffers();
 		bool closed();
 		void close();
