@@ -3,7 +3,7 @@
 #include <string>
 #include "src\graphics\Shader.h"
  
-#include "src/graphics/CubeMesh.h"
+#include "src/graphics/CubeMeshRenderer.h"
 #include <SDL2\SDL.h>
 #include <SDL2\SDL_image.h>
 #include "src\graphics\Texture.h"
@@ -12,7 +12,7 @@
 #include "src/game/Block.h"
 #include "src\game\Chunk.h"
 
-#include "src/game/Resources.h"
+#include "src/game/TextureManager.h"
 
 #define FRAMERATE 60
 
@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 	scene.initGL();
 
 	//Load resources AFTER creating the GL context in scene.
-	if (!Resources::Init()) {
+	if (!TextureManager::Init()) {
 		std::cout << "could not load resources" << std::endl;
 		return EXIT_FAILURE;
 	}
@@ -46,18 +46,20 @@ int main(int argc, char **argv)
 	float camSpeed = 10;
 	float deltaTime = 0;
 
+	int frameRate = 0;
+	int frameCount = 0;
+	float lastFrameRateUpdateTime = 0;
+
 	Camera cam = Camera(math::toRad(90.0), (double)WINDOW_WIDTH / WINDOW_HEIGHT, 0.1, 100);
 	
 	mat4 modelView = mat4(1.0);
-	CubeMesh::BuildMesh(1, "src/shaders/texture.vert", "src/shaders/texture.frag");
+	CubeMeshRenderer::Build(1, "src/shaders/texture.vert", "src/shaders/texture.frag");
 
 	Chunk c(0, 0);
-	Chunk c2(1,0);
 	c.build();
-	c2.build();
 
 	cam.setPosition(Vector3(0,0,-2));
-	cam.setForward(Vector3(0,0,1));
+	//cam.setForward(Vector3(0,0,1));
 
 	Vector3 forward;
 	Vector3 target_forward;
@@ -70,7 +72,7 @@ int main(int argc, char **argv)
 	while (scene.closed() == false) 
 	{
 		frameStartTime = SDL_GetTicks();
-		scene.updateEvents();
+		scene.updateInputs();
 
 #pragma region userInput
 		
@@ -87,7 +89,7 @@ int main(int argc, char **argv)
 		target_forward.x = cos(pitch)*sin(yaw);
 		target_forward.y = sin(pitch);
 		target_forward.z = cos(pitch)*cos(yaw);
-
+		
 		math::lerp(forward, target_forward, 20*deltaTime);
 		cam.setForward(forward);
 
@@ -112,7 +114,7 @@ int main(int argc, char **argv)
 
 		target_dv.normalize();
 		math::lerp(dv, target_dv, 20 * deltaTime);
-		cam.move( (cam.GetForward()*dv.z - Vector3::CrossProduct(cam.GetForward(), Vector3(0,1,0)).normalized()*dv.x) * deltaTime * camSpeed);
+		cam.move( (cam.GetForward()*dv.z - cam.GetRight()*dv.x) * deltaTime * camSpeed);
 #pragma endregion
 
 		modelView = cam.getModelViewMatrix();
@@ -125,7 +127,7 @@ int main(int argc, char **argv)
 					for (int y = 0; y < CHUNK_HEIGHT; y++) {
 						Block* b = c.GetBlockAt(x, y, z);
 						if (b != NULL) {
-							b->SetType((math::NextInt(0,100) < 50) ? BlockType::Air : BlockType::Dirt);
+							b->SetType((math::NextInt(0,100) < 50) ? BlockType::Stone : BlockType::Dirt);
 						}
 					}
 				}
@@ -133,21 +135,31 @@ int main(int argc, char **argv)
 		}
 		
 		c.render(cam);
-		c2.render(cam);
 
 		scene.swapBuffers();
 
 #pragma region timeProcessing
-		if (deltaTime < targetDT) {
+		deltaTime = SDL_GetTicks() / 1000.0 - frameStartTime / 1000.0; //in seconds
+		/*if (deltaTime < targetDT) {
 			SDL_Delay(targetDT * 1000 - deltaTime * 1000);
 			deltaTime = targetDT;
-		}
+		}*/
 		elapsedTime += deltaTime;
-		deltaTime = SDL_GetTicks() / 1000.0 - frameStartTime / 1000.0; //in seconds
+
+		frameCount++;
+		if (frameCount > 60) {
+			frameRate = frameCount / (elapsedTime - lastFrameRateUpdateTime);
+			frameCount = 0;
+			lastFrameRateUpdateTime = elapsedTime;
+
+			scene.SetTitle(std::string("openGL | ") + std::to_string(frameRate) + " fps");
+		}
+
 #pragma endregion
+
 	}
 
-	Resources::Free();
+	TextureManager::Free();
 	return EXIT_SUCCESS;
 
 }

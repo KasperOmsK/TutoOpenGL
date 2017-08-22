@@ -67,7 +67,7 @@ Vector3& Vector3::multiply(float k)
 
 Vector3 & Vector3::normalize()
 {
-	float l = length();
+	float l = magnitude();
 	if (l != 0) {
 		divide(l);
 	}
@@ -79,12 +79,17 @@ Vector3 Vector3::normalized() const
 	return Vector3(*this).normalize();
 }
 
-float Vector3::length() const
+float Vector3::magnitude() const
 {
 	if (x==0 && y ==0 && z==0) {
 		return 0;
 	}
 	return sqrtf(x*x + y*y + z*z);
+}
+
+float Vector3::sqrdMagnitude() const
+{
+	return x*x + y*y + z*z;
 }
 
 glm::vec3 Vector3::toVec3() const

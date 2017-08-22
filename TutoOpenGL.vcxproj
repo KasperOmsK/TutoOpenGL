@@ -133,10 +133,10 @@
   <ItemGroup>
     <ClCompile Include="src\game\Block.cpp" />
     <ClCompile Include="src\game\Chunk.cpp" />
-    <ClCompile Include="src\game\Resources.cpp" />
+    <ClCompile Include="src\game\TextureManager.cpp" />
     <ClCompile Include="src\math\math.cpp" />
     <ClCompile Include="src\render\Camera.cpp" />
-    <ClCompile Include="src\graphics\CubeMesh.cpp" />
+    <ClCompile Include="src\graphics\CubeMeshRenderer.cpp" />
     <ClCompile Include="src\graphics\Texture.cpp" />
     <ClCompile Include="src\input\Input.cpp" />
     <ClCompile Include="main.cpp" />
@@ -147,8 +147,8 @@
   <ItemGroup>
     <ClInclude Include="src\game\Block.h" />
     <ClInclude Include="src\game\Chunk.h" />
-    <ClInclude Include="src\game\Resources.h" />
-    <ClInclude Include="src\graphics\CubeMesh.h" />
+    <ClInclude Include="src\game\TextureManager.h" />
+    <ClInclude Include="src\graphics\CubeMeshRenderer.h" />
     <ClInclude Include="src\graphics\Texture.h" />
     <ClInclude Include="src\input\Input.h" />
     <ClInclude Include="src\graphics\OpenGLScene.h" />

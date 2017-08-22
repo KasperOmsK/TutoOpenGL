@@ -24,9 +24,12 @@ struct Vector3
 	Vector3& subtract(const Vector3& v);
 	Vector3& divide(float k);
 	Vector3& multiply(float k);
-	Vector3& normalize(); //normalize this instance and return a reference to this
-	Vector3 normalized() const; //return a copy normalized
-	float length() const;
+	//desc : normalize this instance and return a reference to this
+	Vector3& normalize();
+	//desc : return a normalized copy 
+	Vector3 normalized() const; 
+	float magnitude() const;
+	float sqrdMagnitude() const;
 
 	glm::vec3 toVec3() const;
 	Vector3 Copy() const;

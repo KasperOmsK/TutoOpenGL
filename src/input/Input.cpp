@@ -8,7 +8,6 @@ Input::Input()
 	for (int i = 0; i < SDL_NUM_SCANCODES+8; i++) {
 			m_keys[i] = KeyData(i);
 	}
-	SetRelativeMouse(false);
 }
 
 void Input::Update()
@@ -97,13 +96,6 @@ bool Input::IsButtonHeld(int button) const
 	return m_keys[511 + button].held;
 }
 
-void Input::SetRelativeMouse(bool value)
-{
-	if (value)
-		SDL_SetRelativeMouseMode(SDL_TRUE);
-	else
-		SDL_SetRelativeMouseMode(SDL_FALSE );
-}
 int Input::GetMouseX() const
 {
 	return m_mouseX;

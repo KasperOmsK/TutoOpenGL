@@ -19,12 +19,29 @@ class OpenGLScene
 		bool m_closed;
 
 	public:
+		//desc : handle SDL initialization & create a non initialized openGL context
+		//returns : true if init succeeded, false otherwise
 		bool initWindow();
+		//desc : init openGL stuff (glew...)
+		//returns : true if init succeeded, false otherwise
 		bool initGL();
-		void updateEvents();
+		//desc : call Input member update method
+		//note : has to be called before using inputs
+		void updateInputs();
+		//desc : wrap up for SDL_SwapBuffers
 		void swapBuffers();
-		bool closed();
+		//desc : close the window at next update
 		void close();
+		//desc : is the window supposed to be close ?
+		bool closed() const;
+
+		//desc : returns the window's current title
+		const std::string& GetTitle() const;
+		
+		//desc : Set the window's current title
+		void SetTitle(const std::string& newTitle);
+
+		//desc : returns a reference to Input member, used to get input information (key pressed, mouse position...)
 		const Input& inputs();
 };
 

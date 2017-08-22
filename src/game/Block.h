@@ -4,7 +4,8 @@ class Chunk;
 
 enum class BlockType {
 	Air,
-	Dirt
+	Dirt, 
+	Stone
 };
 
 class Block
@@ -22,15 +23,24 @@ public:
 
 	//getters & setters
 	
+	//desc : returns X coordinate of this block in World Space
 	int GetWorldX() const; 
-	int GetWorldY() const; //return coordinates in world space
+	//desc : returns Y coordinate of this block in World Space
+	int GetWorldY() const; 
+	//desc : returns Z coordinate of this block in World Space
 	int GetWorldZ() const;
 
+	//desc : returns X coordinate of this block in Chunk Space
 	int GetChunkX() const;
+	//desc : returns Y coordinate of this block in Chunk Space
 	int GetChunkY() const; //returns coordinates in chunk space
+	//desc : returns Z coordinate of this block in Chunk Space
 	int GetChunkZ() const;
 	
+	//desc : Returns block type (Dirt, Stone, Air etc..)
 	BlockType GetType() const;
+
+	//desc: returns a pointer to the parent chunk
 	Chunk* GetChunk() const;
 
 	void SetType(BlockType newType);

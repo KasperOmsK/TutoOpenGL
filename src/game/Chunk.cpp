@@ -1,5 +1,5 @@
 #include "Chunk.h"
-#include "../graphics/CubeMesh.h"
+#include "../graphics/CubeMeshRenderer.h"
 #include "../math/math.h"
 
 #define sqr(x) x*x
@@ -26,7 +26,7 @@ void Chunk::build() {
 	}
 }
 void Chunk::render(const Camera& cam) {
-	CubeMesh::drawBlocks(cam.getProjectionMatrix(), cam.getModelViewMatrix(), &blocks, sqr(CHUNK_SIZE)*CHUNK_HEIGHT);
+	CubeMeshRenderer::drawBlocks(cam.getProjectionMatrix(), cam.getModelViewMatrix(), &blocks, sqr(CHUNK_SIZE)*CHUNK_HEIGHT);
 }
 void Chunk::Update() {
 	//std::cout << "update" << std::endl;

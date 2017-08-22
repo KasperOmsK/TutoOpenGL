@@ -1,24 +1,24 @@
-#include "CubeMesh.h"
+#include "CubeMeshRenderer.h"
 #include <iostream>
 #include "../game/Chunk.h"
-#include "../game/Resources.h"
+#include "../game/TextureManager.h"
 
 //static members
-float CubeMesh::s_vertices[];
-float CubeMesh::s_uvs[];
-float CubeMesh::s_size;
-Shader CubeMesh::s_shader;
+float CubeMeshRenderer::s_vertices[];
+float CubeMeshRenderer::s_uvs[];
+float CubeMeshRenderer::s_size;
+Shader CubeMeshRenderer::s_shader;
 
 //private methods
-CubeMesh::CubeMesh()
+CubeMeshRenderer::CubeMeshRenderer()
 {
 }
-CubeMesh::~CubeMesh()
+CubeMeshRenderer::~CubeMeshRenderer()
 {
 }
 
 //static methods
-void CubeMesh::BuildMesh(float size, std::string vertexShader, std::string fragShader) {
+void CubeMeshRenderer::Build(float size, std::string vertexShader, std::string fragShader) {
 	s_size = size;
 	s_shader = Shader(vertexShader, fragShader);
 
@@ -70,7 +70,9 @@ void CubeMesh::BuildMesh(float size, std::string vertexShader, std::string fragS
 
 	std::cout << "static cube mesh built !" << std::endl;
 }
-int CubeMesh::drawBlocks(glm::mat4 & projection, glm::mat4 & modelView, std::vector<Block>* positions_array, int count)
+
+//TODO : handle optimization logic in CHUNK. CubeMeshRenderer should not have to access game stuff. It should only draw what is given as parameter
+int CubeMeshRenderer::drawBlocks(glm::mat4 & projection, glm::mat4 & modelView, std::vector<Block>* positions_array, int count)
 {
 	using namespace glm;
 
@@ -105,7 +107,7 @@ int CubeMesh::drawBlocks(glm::mat4 & projection, glm::mat4 & modelView, std::vec
 				glUniformMatrix4fv(glGetUniformLocation(s_shader.getProgramID(), "modelview"), 1, GL_FALSE, value_ptr(modelView));
 				glUniformMatrix4fv(glGetUniformLocation(s_shader.getProgramID(), "projection"), 1, GL_FALSE, value_ptr(projection));
 				
-				glBindTexture(GL_TEXTURE_2D, Resources::GetTexture(b.GetType())->GetID() );
+				glBindTexture(GL_TEXTURE_2D, TextureManager::GetTexture(b.GetType())->GetID() );
 				glDrawArrays(GL_TRIANGLES, 0, 36);
 				glBindTexture(GL_TEXTURE_2D, 0);
 				

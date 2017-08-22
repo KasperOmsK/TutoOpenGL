@@ -70,11 +70,12 @@ bool OpenGLScene::initGL()
 
 	//enable depth buffer test
 	glEnable(GL_DEPTH_TEST);
-
+	//SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, 0);
+	glClearColor(135/255.0, 206/255.0, 235/255.0, 1);
 	return true;
 }
 
-void OpenGLScene::updateEvents()
+void OpenGLScene::updateInputs()
 {
 	m_inputs.Update();
 	m_closed = m_inputs.closed();
@@ -85,8 +86,19 @@ void OpenGLScene::swapBuffers()
 	SDL_GL_SwapWindow(m_window);
 }
 
-bool OpenGLScene::closed(){
+bool OpenGLScene::closed() const{
 	return m_closed;
+}
+
+const std::string & OpenGLScene::GetTitle() const
+{
+	return m_title;
+}
+
+void OpenGLScene::SetTitle(const std::string& newTitle)
+{
+	m_title = newTitle;
+	SDL_SetWindowTitle(m_window, m_title.c_str());
 }
 
 void OpenGLScene::close() {

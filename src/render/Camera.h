@@ -14,6 +14,7 @@ private:
 	
 	Vector3 m_position;
 	Vector3 m_forward;
+	Vector3 m_up;
 
 	glm::mat4 m_projectionMatrix;
 
@@ -24,10 +25,12 @@ public:
 	Camera& move(const Vector3 dv);
 	
 	//getters
+
 	glm::mat4 getModelViewMatrix() const;
 	glm::mat4 getProjectionMatrix() const;
 	Vector3 GetPosition() const;
 	Vector3 GetForward() const;
+	Vector3 GetRight() const;
 
 	//setters
 	Camera& setPosition(const Vector3 newPos);
