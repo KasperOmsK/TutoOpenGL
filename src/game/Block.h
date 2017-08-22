@@ -14,7 +14,7 @@ private:
 	int m_y;
 	int m_z;
 	BlockType m_type;
-	Chunk* m_chunk = 0; //const pointer to Chunk
+	Chunk* m_chunk = 0; //pointer to Chunk
 
 public:
 	Block(int x, int y, int z, BlockType t, Chunk* pchunk);
@@ -27,6 +27,7 @@ public:
 	int GetWorldZ() const;
 
 	int GetChunkX() const;
+	int GetChunkY() const; //returns coordinates in chunk space
 	int GetChunkZ() const;
 	
 	BlockType GetType() const;

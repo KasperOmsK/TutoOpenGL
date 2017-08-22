@@ -24,4 +24,6 @@ namespace math
 
 	int from3D_indexing_to_1d(int x, int y, int z, int width, int height);
 
+	double toRad(double angleInDegrees);
+
 }

@@ -24,7 +24,7 @@ Block::~Block()
 int Block::GetWorldX() const
 {
 	return GetChunkX() + m_chunk->GetX()* CHUNK_SIZE;
-}
+} 
 int Block::GetWorldY() const
 {
 	return m_y;
@@ -36,6 +36,9 @@ int Block::GetWorldZ() const
 
 int Block::GetChunkX() const {
 	return m_x;
+}
+int Block::GetChunkY() const {
+	return m_y;
 }
 int Block::GetChunkZ() const {
 	return m_z;

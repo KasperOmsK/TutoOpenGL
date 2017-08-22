@@ -12,17 +12,13 @@
 #include "src/game/Block.h"
 #include "src\game\Chunk.h"
 
-#define PI 3.14159265359
+#include "src/game/Resources.h"
+
 #define FRAMERATE 60
 
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 600;
 const double ratio = (double)WINDOW_WIDTH / WINDOW_HEIGHT;
-
-double toRad(double angleInDegree) {
-	return angleInDegree * PI / 180.0;
-}
-
 
 
 
@@ -35,6 +31,12 @@ int main(int argc, char **argv)
 	OpenGLScene scene = OpenGLScene("openGL", WINDOW_WIDTH, WINDOW_HEIGHT);
 	scene.initWindow();
 	scene.initGL();
+
+	//Load resources AFTER creating the GL context in scene.
+	if (!Resources::Init()) {
+		std::cout << "could not load resources" << std::endl;
+		return EXIT_FAILURE;
+	}
 	
 	scene.inputs().SetCursorRelative(true);
 
@@ -44,10 +46,10 @@ int main(int argc, char **argv)
 	float camSpeed = 10;
 	float deltaTime = 0;
 
-	Camera cam = Camera(toRad(90.0), (double)WINDOW_WIDTH / WINDOW_HEIGHT, 0.1, 100);
+	Camera cam = Camera(math::toRad(90.0), (double)WINDOW_WIDTH / WINDOW_HEIGHT, 0.1, 100);
 	
 	mat4 modelView = mat4(1.0);
-	CubeMesh::BuildMesh(1, "src/shaders/couleur3D.vert", "src/shaders/couleur3D.frag");
+	CubeMesh::BuildMesh(1, "src/shaders/texture.vert", "src/shaders/texture.frag");
 
 	Chunk c(0, 0);
 	Chunk c2(1,0);
@@ -68,7 +70,6 @@ int main(int argc, char **argv)
 	while (scene.closed() == false) 
 	{
 		frameStartTime = SDL_GetTicks();
-	
 		scene.updateEvents();
 
 #pragma region userInput
@@ -78,10 +79,10 @@ int main(int argc, char **argv)
 		}
 
 		Vector3 mouseDelta = scene.inputs().GetMousePositionRelative();
-		yaw -= toRad(mouseDelta.x * deltaTime * camSensitivity);
-		pitch -= toRad(mouseDelta.y * deltaTime * camSensitivity);
+		yaw -= math::toRad(mouseDelta.x * deltaTime * camSensitivity);
+		pitch -= math::toRad(mouseDelta.y * deltaTime * camSensitivity);
 
-		math::clamp(pitch, (float)toRad(-89), (float)toRad(89));
+		math::clamp(pitch, (float)math::toRad(-89), (float)math::toRad(89));
 
 		target_forward.x = cos(pitch)*sin(yaw);
 		target_forward.y = sin(pitch);
@@ -119,16 +120,12 @@ int main(int argc, char **argv)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		if (scene.inputs().IsKeyDown(SDL_SCANCODE_T)) {
-			
 			for (int x = 0; x < CHUNK_SIZE; x++) {
 				for (int z = 0; z < CHUNK_SIZE; z++) {
 					for (int y = 0; y < CHUNK_HEIGHT; y++) {
 						Block* b = c.GetBlockAt(x, y, z);
 						if (b != NULL) {
 							b->SetType((math::NextInt(0,100) < 50) ? BlockType::Air : BlockType::Dirt);
-						}
-						else {
-							std::cout << "block null wtf ? " << std::endl;
 						}
 					}
 				}
@@ -147,9 +144,10 @@ int main(int argc, char **argv)
 		}
 		elapsedTime += deltaTime;
 		deltaTime = SDL_GetTicks() / 1000.0 - frameStartTime / 1000.0; //in seconds
-	}
 #pragma endregion
+	}
 
+	Resources::Free();
 	return EXIT_SUCCESS;
 
 }

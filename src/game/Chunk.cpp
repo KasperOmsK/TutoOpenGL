@@ -26,7 +26,7 @@ void Chunk::build() {
 	}
 }
 void Chunk::render(const Camera& cam) {
-	CubeMesh::drawTest(cam.getProjectionMatrix(), cam.getModelViewMatrix(), &blocks, sqr(CHUNK_SIZE)*CHUNK_HEIGHT);
+	CubeMesh::drawBlocks(cam.getProjectionMatrix(), cam.getModelViewMatrix(), &blocks, sqr(CHUNK_SIZE)*CHUNK_HEIGHT);
 }
 void Chunk::Update() {
 	//std::cout << "update" << std::endl;

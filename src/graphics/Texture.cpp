@@ -10,6 +10,7 @@ Texture::Texture(std::string path)
 Texture::~Texture()
 {
 	glDeleteTextures(1, &m_textureID);
+	std::cout << "texture deleted" << std::endl;
 }
 
 bool Texture::load()
@@ -22,6 +23,7 @@ bool Texture::load()
 	}
 
 	glGenTextures(1, &m_textureID); //generate texture id
+	std::cout << glGetError() << std::endl;
 	glBindTexture(GL_TEXTURE_2D, m_textureID); //lock texture so we can use it
 
 	//check for texture file format (rgb or rgba) & store it in internalFormat

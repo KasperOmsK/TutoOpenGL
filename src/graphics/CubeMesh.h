@@ -12,7 +12,7 @@ class CubeMesh
 {
 	private:
 		static float s_vertices[108];
-		static float s_colors[108];
+		static float s_uvs[108];
 		static Shader s_shader;
 		static float s_size;
 	private:
@@ -20,8 +20,5 @@ class CubeMesh
 		~CubeMesh();
 	public:
 		static void BuildMesh(float size, std::string vertexShader, std::string fragShader);
-		//static void drawTest(glm::mat4 &projection, glm::mat4 &modelView, Block* positions_array, int count);
-		static void drawTest(glm::mat4 &projection, glm::mat4 &modelView, std::vector<Block> *positions_array, int count);
+		static int drawBlocks(glm::mat4 &projection, glm::mat4 &modelView, std::vector<Block> *positions_array, int count);
 };
-
-		//void render(glm::mat4 &projection, glm::mat4 &modelView);
